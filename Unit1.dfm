@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = 389
-  Top = 184
+  Left = 373
+  Top = 422
   Width = 600
   Height = 437
   Caption = 'Security Notepad'

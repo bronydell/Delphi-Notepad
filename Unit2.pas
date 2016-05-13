@@ -35,9 +35,9 @@ Form2.Close;
 end;
 
 procedure TForm2.Label3Click(Sender: TObject);
-var URL: ansistring;
 begin
-//ShellExecute( Handle, 'open', 'https://bitbucket.org/bronydell/secure-notepad/src', nil, nil, SW_NORMAL );
+//Launch BROWSEEER WITH LIIIIIINK
+shellexecute(0, nil, pchar('https://github.com/bronydell/Delphi-Notepad.git'), nil, nil, sw_restore);
 end;
 
 end.

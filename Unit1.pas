@@ -11,19 +11,32 @@ type
   { TForm1 }
  
   TForm1 = class(TForm)
+
+    //Our big text field
     Editor: TMemo;
+    //Menu
     MainMenu: TMainMenu;
+    //Item that contents file items
     FileItem: TMenuItem;
+    //Item for exit from app
     ExitItem: TMenuItem;
+    //Dialog for opening files
     OpenThatShit: TOpenDialog;
+    //Item that contents opening items
     OpenItem: TMenuItem;
+    //Dialog for saving files
     SaveThatShit: TSaveDialog;
+    //Item that contents saving items
     SaveItem: TMenuItem;
+
+    //Items of men
     SaveWithCode: TMenuItem;
     AboutItem: TMenuItem;
     SaveWithoutCode: TMenuItem;
     OpenWithoutCode: TMenuItem;
     OpenWithCode: TMenuItem;
+
+    //Actions with code aka functions
     ActionList1: TActionList;
     SaveNoCode: TAction;
     SaveCode: TAction;
@@ -50,7 +63,14 @@ var
 implementation
 
 {$R *.dfm}
-
+{
+******
+Data-in - List of Strings, password, decode state(T/F)
+******
+******
+Return - Coded or decoded List of Strings
+******
+}
 function Code(listOfLines: TStringList; password: string;
   decode: boolean):TStringList;
 var
@@ -69,14 +89,16 @@ begin
     begin
       text := listOfLines.Strings[i];
       for j := 1 to Length(text) do
+        //Adding to charter code
         text[j] := chr(ord(text[j]) + sign *
           ord(password[j mod PasswordLength + 1]));
+      //Apply new text to line
       listOfLines.Strings[i]:=text;
     end;
  Code:=listOfLines;
 end;
 
-
+//Saving without encryption
 procedure TForm1.SaveNoCodeExecute(Sender: TObject);
 begin
   SaveThatShit := TSaveDialog.Create(self);
@@ -95,6 +117,7 @@ begin
   SaveThatShit.Free;
 end;
 
+//Saving with encryption
 procedure TForm1.SaveCodeExecute(Sender: TObject);
 var value: string;
     zoznam: TStringList;
@@ -112,9 +135,7 @@ begin
        CurrentFileDir:='';    //Empty
        zoznam := TStringList.Create;
        zoznam.Assign(Editor.Lines);
-       ShowMessage(zoznam[0]);
        zoznam:=code(zoznam, value, false);
-       ShowMessage(zoznam[0]);
        Editor.Lines:=zoznam;
        Editor.Lines.SaveToFile(SaveThatShit.FileName);
   end;
@@ -123,6 +144,7 @@ begin
   SaveThatShit.Free;
 end;
 
+//Open NOT encrypted file
 procedure TForm1.OpenWithoutCDExecute(Sender: TObject);
 begin
   OpenThatShit := TOpenDialog.Create(self);
@@ -136,6 +158,7 @@ begin
   OpenThatShit.Free;
 end;
 
+//Open and show encrypted file with code
 procedure TForm1.OpenWithCDExecute(Sender: TObject);
 var value: string;
 zoznam: TStringList;
@@ -158,7 +181,7 @@ value:=InputBox('Security code',
   OpenThatShit.Free;
    end;
 
-   
+//Just a stupid button   
 procedure TForm1.AboutItemClick(Sender: TObject);
 begin
    Form2.Show;
